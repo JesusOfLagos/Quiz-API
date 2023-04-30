@@ -1,11 +1,13 @@
 const express = require("express");
 const Users = require("../Models/Users");
+const Quiz = require("../Models/Quizzes")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const checkAuth = require("../MiddleWare/check-auth");
 const env = require("dotenv").config();
 
 const { LoginValidator, RegisterValidator } = require("../Validators/validators");
+const Quizzes = require("../Models/Quizzes");
 
 const router = express.Router();
 
@@ -77,9 +79,31 @@ router.post('/users/auth', (req, res) => {
     }
 })
 
-router.get('/:id, req.body.params.id', (req, res) => {
-    
+router.get('/:id', (req, res) => {
+    Users.findOne({_id: req.params.id}).then(user => {
+        res.json({user, success: true}).catch(er => {
+            res.json({success: false, message: er.message})
+        })
+    })
 })
+
+router.delete('/:id', (req, res) => {
+    Users.findOneAndDelete({_id: req.params.id}).then(user => {
+        res.json({message: "User deleted succesfully", success: true}).catch(er => {
+            res.json({success: false, message: "Can't Delete User"})
+        })
+    })
+})
+
+
+
+
+
+
+
+
+
+
 
 
 

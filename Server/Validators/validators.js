@@ -46,3 +46,7 @@ module.exports.RegisterValidator = (data) => {
         isValid: isEmpty(errors)
     }
 }
+
+
+
+

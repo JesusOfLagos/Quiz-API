@@ -1,13 +1,15 @@
 const JWT = require("jsonwebtoken");
 
-module.exports = (res, req, next) => {
+module.exports = (req, res, next) => {
     try{
-    let token = req.headers["authorization"].split(' ')[2];
+    let token = req.headers['authorization'];
+    console.log(token);
     const decoded = JWT.verify(token, process.env.APP_SECRET);
     req.userData = decoded;
     next();
 } catch(err) {
-    return res.status(402).json({
+    console.log(err)
+    return res.status(401).json({
         "message": "Not Authorized",
     })
 }
