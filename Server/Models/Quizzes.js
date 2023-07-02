@@ -8,8 +8,8 @@ const QuizSchema = new Schema({
         required: true
     },
 
-    quiz_id: {
-        type: String,
+    questions: {
+        type: [],
         required: true
     },
 
@@ -19,9 +19,19 @@ const QuizSchema = new Schema({
         unique: true
     },
 
-    password: {
+    imgUrl: {
         type: String,
         required: true
+    },
+
+    category: {
+        type: String,
+        required: true
+    },
+
+    participants: {
+        type: [],
+        required: false
     },
 
     createdAt: {
@@ -29,24 +39,16 @@ const QuizSchema = new Schema({
         default: new Date()
     },
 
-    updated_at: {
+    updatedAt: {
         type: Date,
         default: new Date()
     },
 
     created_by: {
-        type: Object,
-        required: true,
-        contains: {
-            Users : {
-                type: Object,
-                required: true,
-            },
-            UsersId: {
-                type: String
-            }
-        }
-        },
+        type: Schema.Types.ObjectId,
+        ref: "Users"
+    },
+
     deleted_at: {
             type: Boolean,
             default: false
@@ -54,4 +56,4 @@ const QuizSchema = new Schema({
     })
 
 
-module.exports = Users = mongoose.model("Quizzes", QuizSchema);
+module.exports = Quiz = mongoose.model("Quizzes", QuizSchema);

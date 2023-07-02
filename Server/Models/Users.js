@@ -1,3 +1,6 @@
+const Quizzes = require("./Quizzes");
+
+
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -29,18 +32,22 @@ const UserSchema = new Schema({
         default: new Date()
     },
 
-    avatar: {
-        type: Object,
-        required: false,
-        contains: {
-            url: {
-                type: String
-            },
-            publicId: {
-                type: String
-            }
-        }
-        },
+    quizzes: {
+        type: [],
+        required: true
+    },
+
+    imgUrl: {
+        type: String,
+        required: false
+    },
+
+
+    numberOfAttempts: {
+        type: Number,
+        default: 0
+    },
+    
     deleted: {
             type: Boolean,
             default: false
