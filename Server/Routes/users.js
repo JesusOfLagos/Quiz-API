@@ -100,7 +100,7 @@ router.post('/users/auth', async (req, res) => {
 
 // Get A User By Id
 
-router.get('/:id', async (req, res) => {
+router.get('users/find/:id', async (req, res) => {
     await Users.findOne({_id: req.params.id}).then(user => {
         res.json({user, success: true}).catch(er => {
             res.json({success: false, message: er.message})
@@ -112,7 +112,7 @@ router.get('/:id', async (req, res) => {
 
 
 // Delete A User
-router.delete('/:id', async (req, res) => {
+router.delete('users/delete/:id', async (req, res) => {
     await Users.findOneAndDelete({_id: req.params.id}).then(user => {
         res.json({message: "User deleted successfully", success: true}).catch(er => {
             res.json({success: false, message: "Can't Delete User"})
@@ -170,7 +170,7 @@ router.post('/me/create-quiz', async (req, res) => {
 // Get all the quizzes for a user
 
 
-router.get('/me/quizzes/:id', async (req, res) => {
+router.get('/me/quizzes', async (req, res) => {
     await Users.findOne({_id: req.params.id}).then(user => {
         const Quiz = user.quizzes;
         res.json({Quiz, success: true, message: "Got all the quizzes"}).catch(error => {
