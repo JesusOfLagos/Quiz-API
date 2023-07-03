@@ -273,7 +273,7 @@ router.post('/quiz/:quizId/questions', async (req, res) => {
 
 // Add options to the question
 
-router.post('/quiz/:quizId/questions', async (req, res) => {
+router.post('/quiz/:quizId/questions/:questionId/options', async (req, res) => {
     await Questions.findOne({_id: req.params.id}).then(question => {
         // const {  } = req.body;
 
@@ -340,7 +340,7 @@ router.delete('/users/delete', async(req, res) => {
 // Fetch All Questions For A Quiz
 
 
-router.get('/me/quizzes/questions/:id', async (req, res) => {
+router.get('/me/quizzes/:quizId/questions/:questionId', async (req, res) => {
     await Quizzes.findOne({_id: req.params.id}).then(quiz => {
         const Quiz = quiz.questions;
         res.json({Quiz, success: true, message: "Got all the quizzes"}).catch(error => {
@@ -357,7 +357,7 @@ router.get('/me/quizzes/questions/:id', async (req, res) => {
 
 // Edit A Question
 
-router.put('/quizzes/questions/:questionId', async (req, res) => {
+router.put('/quizzes/:quizId/questions/:questionId', async (req, res) => {
 
 
     const {newQuestionName, newOptions, newCorrectAnswer} = req.body
@@ -380,7 +380,7 @@ router.put('/quizzes/questions/:questionId', async (req, res) => {
 
 
 
-router.delete('/users/quizzes/questions/delete', async (req, res) => {
+router.delete('/users/quizzes/:quizId/questions/:questionId/remove', async (req, res) => {
     await Quizzes.findOne({_id: req.params.id}).then(quiz => {
 
         const Question = quiz.questions
@@ -420,7 +420,7 @@ router.delete('/users/quizzes/questions/delete', async (req, res) => {
 
 // Attempt A Quiz
 
-router.put('/:id', checkAuth, async (req, res) => {
+router.put('quizzes/:quizId/attempt', checkAuth, async (req, res) => {
 
     const numberOfAttempts = user.numberOfAttempts;
     const newNumberOfAttempts = numberOfAttempts + 1;
@@ -450,7 +450,7 @@ router.put('/:id', checkAuth, async (req, res) => {
 
 // Fetch All Quiz Participants
 
-router.get('/quiz/participants', async(req, res) => {
+router.get('/quizzes/:quizId/participants', async(req, res) => {
     await Quizzes.findById({_id: req.params.id}).then(quiz => {
         const quizParticipants = quiz.participants;
 
@@ -470,7 +470,7 @@ router.get('/quiz/participants', async(req, res) => {
 
 
 
-router.get('/:id', checkAuth, async (req, res) => {
+router.post('/quizzes/:quizId/close', checkAuth, async (req, res) => {
     await Users.findOne({_id: req.params.id}).then(user => {
         res.json({user, success: true}).catch(er => {
             res.json({success: false, message: er.message})
