@@ -25,7 +25,8 @@
  // middleware
  app.use(express.json());
  app.use[morgan("dev")];
- app.use[cors({ origin: true, credentials: true })];
+ app.use[cors({ origin: 'https://stale-quiz.onrender.com', credentials: true })];
+  app.use[cors({ origin: true, credentials: true })];
  app.use("/api/users", userRoutes);
  //routes
  const TestRoutes = require("./Routes/test");
